@@ -5,12 +5,12 @@ class Main():
     max_height = 5
     character_alive = True
     character_won = False
-    monster_awake = True # should be false in live version
+    monster_awake = False # should be false in live version
     monster_awakened = False
     monster_move_per_turn = 2
 
     def __init__(self):
-        #self.display_menu()
+        self.display_menu()
         self.reset_current_game()
 
     def reset_current_game(self):
@@ -96,6 +96,34 @@ class Main():
         if (first[0] == second[0] and first[1] == second[1]):
             return True
 
+    def collition_check(self):
+        if (self.coordinate_collisions('player', 'monster')):
+            self.character_alive = False
+        elif (self.coordinate_collisions('player', 'flask')):
+            self.character_won = True
+        elif (self.coordinate_collisions('player', 'trap')):
+            self.monster_awakened = True
+            self.trap_position = [-1,-1]
+            return True
+        return False
+
+    def start_new_game(self):
+        self.reset_all_settings()
+        self.reset_current_game()
+        self.setup_game()
+
+    def reset_all_settings(self):
+        self.character_alive = True
+        self.monster_awake = False
+        self.monster_awakened = False
+        self.character_won = False
+
+    def setup_game(self):
+        self.place_character()
+        self.place_monster()
+        self.place_trap()
+        self.place_flask()
+        self.draw_grid()
 
     def menu_choice(self, choice):
         try:
@@ -103,7 +131,7 @@ class Main():
         except ValueError:
             choice = 0
         if (choice == 1):
-            pass
+            self.start_new_game()
         elif (choice == 2):
             pass
         elif (choice == 3):
@@ -139,9 +167,4 @@ class Main():
             sys.stdout.write('\n')
 
 monster = Main()
-monster.place_character()
-monster.place_monster()
-monster.place_flask()
-monster.place_trap()
-monster.draw_grid()
 
