@@ -17,13 +17,13 @@ class Main():
         self.character_position = [0,0]
 
     def place_monster(self):
-        self.monster_position = [1,1]
+        self.monster_position = [random.randint(0, self.max_width - 1),random.randint(0, self.max_height - 1)]
 
     def place_trap(self):
-        self.trap_position = [0,1]
+        self.trap_position = [random.randint(0, self.max_width - 1),random.randint(0, self.max_height - 1)]
 
     def place_flask(self):
-        self.flask_position = [1,0]
+        self.flask_position = [random.randint(0, self.max_width - 1),random.randint(0, self.max_height - 1)]
 
     def display_menu(self):
         menu_list = ['Start New Game', '[Save Game]', '[Load Game]', 'Customize Setup', 'Exit']
@@ -72,7 +72,7 @@ class Main():
                 elif (str(self.flask_position[0]) == x and str(self.flask_position[1]) == y):
                     sys.stdout.write('F')
                 else:
-                    sys.stdout.write('?')
+                    sys.stdout.write('~')
             sys.stdout.write('\n')
 
 monster = Main()
